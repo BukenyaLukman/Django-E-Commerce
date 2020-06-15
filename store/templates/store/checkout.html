@@ -22,16 +22,16 @@
 							<input class="form-control" type="text" name="address" placeholder="Address ..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="city" placeholder="District..">
+							<input class="form-control" type="text" name="city" placeholder="City..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="state" placeholder="Area|Town..">
+							<input class="form-control" type="text" name="state" placeholder="State..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="zipcode" placeholder="Phone Number..">
+							<input class="form-control" type="text" name="zipcode" placeholder="zipcode..">
 						</div>
 						<div class="form-field">
-							<input class="form-control" type="text" name="country" placeholder="Phone Number..">
+							<input class="form-control" type="text" name="country" placeholder="country..">
 						</div>
 					</div>
 
@@ -41,7 +41,7 @@
 			</div>
 			<br>
 			<div class="box-element hidden" id="payment-info">
-				<small>PayPal Options</small>\
+				<small>PayPal Options</small>
 				<button id="make-payment">Make Payment</button>
 			</div>
 			
@@ -135,7 +135,7 @@
 				method: 'POST',
 				headers:{
 					'Content-Type':'application/json',
-					X-CSRFToken:csrftoken:,
+					'X-CSRFToken':csrftoken,
 				},
 				body:JSON.stringify({'form':userFormData,'shipping':shippingInfo})
 			})
@@ -143,6 +143,10 @@
 			.then((data) => {
 				console.log('Success:',data);
 				alert('Transaction completed');
+
+				cart = {}
+				document.cookie = 'cart=' + JSON.stringify(cart) + ";domain=;path=/"
+
 				window.location.href = "{% url 'store' %}"
 			})
 

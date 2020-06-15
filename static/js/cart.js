@@ -9,17 +9,40 @@ for (var i = 0; i < updateBtns.length; i++) {
 
  			console.log('USER',user)
  			if(user === 'AnonymousUser'){
- 				console.log('Not Logged in')
+ 				addCookieItem(productId,action)
  			}else{
  				updateUserOrder(productId,action)
  			}
  		})
 }
 
+function addCookieItem(productId,action){
+	if(action == 'add'){
+		if(cart[productId] == undefined){
+			cart[productId] = {'quantity':1}
+		}else{
+			cart[productId]['quantity'] + 1
+		}
+	}
+
+	if(action == 'remove'){
+		cart[productId]['quantity'] -= 1
+		if (cart[productId]['quantity'] <= 0) {
+			console.log('Remove Item')
+			delete cart[productId]
+		}
+	}
+
+	console.log('Cart:',cart)
+	document.cookie = 'cart=' + JSON.stringify(cart)
+	location.reload()
+
+}
+
 function updateUserOrder(productId, action){
 	console.log('User is logged in, sending data...');
 
-	var url = '/update_item/.json'
+	var url = '/update_item/'
 
 	fetch(url,{
 		method: 'POST',
